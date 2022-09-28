@@ -196,7 +196,7 @@ const Navbar = () => {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    await axios.put('/api/auth/logout');
+    await axios.get('/api/auth/logout');
     dispatch(logout());
   };
 
