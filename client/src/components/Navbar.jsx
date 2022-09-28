@@ -10,6 +10,7 @@ import Upload from "./Upload";
 import { editUser, logout } from "../redux/userSlice";
 import app from "../firebase";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 import {
   getStorage,
   ref,
@@ -142,6 +143,7 @@ const Navbar = () => {
   const {currentUser} = useSelector(state => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookies] = useCookies();
 
   const [img, setImg] = useState(undefined);
   const [imgPerc, setImgPerc] = useState(0);
@@ -192,8 +194,9 @@ const Navbar = () => {
   }
 
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
+    await axios.put('/api/auth/logout');
     dispatch(logout());
   };
 

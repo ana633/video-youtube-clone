@@ -30,7 +30,10 @@ export const signin = async (req, res, next) => {
         const {password, ...others} = user._doc;
 
         res.cookie("access_token", token, {
+            maxAge: 10000,
+            secure: true,
             httpOnly: true,
+            expires: 0,
         })
         .status(200)
         .json(others);
@@ -38,4 +41,9 @@ export const signin = async (req, res, next) => {
         next(error);
     }
 };
+
+export const logOut = async (req, res, next) =>{
+    res.clearCookie("jwt");
+    res.redirect("/").status(200).json("logout succesful");
+}
 
